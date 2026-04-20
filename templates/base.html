@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Meeting Planner{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="brand">
+            <h1><a href="{% url 'dashboard' %}">Meeting Planner</a></h1>
+        </div>
+        {% if request.user.is_authenticated %}
+            <nav class="main-nav">
+                <a href="{% url 'dashboard' %}">Painel</a>
+                {% if acting_user.role == 'manager' or acting_user.is_superuser %}
+                    <a href="{% url 'employee_list' %}">Funcionários</a>
+                    <a href="{% url 'meeting_list' %}">Reuniões</a>
+                {% else %}
+                    <a href="{% url 'invitation_list' %}">Meus convites</a>
+                {% endif %}
+                <a href="/admin/">Admin Django</a>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="link-button">Sair</button>
+                </form>
+            </nav>
+        {% endif %}
+    </header>
+
+    <main class="page-shell">
+        {% if preview_user %}
+            <section class="preview-banner">
+                Visualização de administrador: você está vendo o sistema como <strong>{{ preview_user }}</strong>.
+            </section>
+        {% endif %}
+
+        {% if messages %}
+            <section class="messages">
+                {% for message in messages %}
+                    <article class="message">{{ message }}</article>
+                {% endfor %}
+            </section>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

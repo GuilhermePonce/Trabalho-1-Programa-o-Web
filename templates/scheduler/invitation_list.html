@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Meus Convites{% endblock %}
+
+{% block content %}
+<section class="card">
+    <div class="section-head">
+        <div>
+            <p class="eyebrow">Respostas do funcionário</p>
+            <h2>Convites recebidos</h2>
+        </div>
+    </div>
+    {% if invitations %}
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Reunião</th>
+                    <th>Gerente</th>
+                    <th>Data</th>
+                    <th>Status</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for invitation in invitations %}
+                    <tr>
+                        <td>{{ invitation.meeting.title }}</td>
+                        <td>{{ invitation.meeting.created_by }}</td>
+                        <td>{{ invitation.meeting.scheduled_for|date:"d/m/Y H:i" }}</td>
+                        <td>{{ invitation.get_status_display }}</td>
+                        <td><a href="{% url 'invitation_detail' invitation.id %}">Responder</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Você não recebeu convites.</p>
+    {% endif %}
+</section>
+{% endblock %}

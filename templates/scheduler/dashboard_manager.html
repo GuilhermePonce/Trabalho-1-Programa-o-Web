@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Painel do Gerente{% endblock %}
+
+{% block content %}
+<section class="hero card">
+    <h2>Olá, {{ acting_user.first_name|default:acting_user.username }}</h2>
+</section>
+
+<section class="stats-grid">
+    <article class="card stat-card">
+        <span class="stat-value">{{ employees_count }}</span>
+        <span class="stat-label">Funcionários cadastrados</span>
+    </article>
+    <article class="card stat-card">
+        <span class="stat-value">{{ meetings_count }}</span>
+        <span class="stat-label">Reuniões criadas</span>
+    </article>
+    <article class="card stat-card">
+        <span class="stat-value">{{ pending_responses }}</span>
+        <span class="stat-label">Respostas pendentes</span>
+    </article>
+</section>
+
+<section class="content-grid">
+    <article class="card">
+        <div class="section-head">
+            <h3>Equipe</h3>
+            <a class="button-link" href="{% url 'employee_create' %}">Novo funcionário</a>
+        </div>
+        {% if employees %}
+            <ul class="plain-list">
+                {% for employee in employees %}
+                    <li>{{ employee }} <span>{{ employee.email }}</span></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Você ainda não cadastrou funcionários.</p>
+        {% endif %}
+    </article>
+
+    <article class="card">
+        <div class="section-head">
+            <h3>Próximas reuniões</h3>
+            <a class="button-link" href="{% url 'meeting_create' %}">Nova reunião</a>
+        </div>
+        {% if meetings %}
+            <ul class="plain-list">
+                {% for meeting in meetings %}
+                    <li>
+                        <a href="{% url 'meeting_detail' meeting.id %}">{{ meeting.title }}</a>
+                        <span>{{ meeting.scheduled_for|date:"d/m/Y H:i" }} | {{ meeting.accepted_count }} aceitas | {{ meeting.pending_count }} pendentes</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Nenhuma reunião foi criada até agora.</p>
+        {% endif %}
+    </article>
+</section>
+
+{% if request.user.is_superuser %}
+<section class="card">
+    <h3>Visualização como outro usuário</h3>
+    <p>Como administrador, você pode abrir o painel de qualquer membro usando os links abaixo.</p>
+    <ul class="plain-list">
+        {% for member in all_members %}
+            <li><a href="{% url 'dashboard' %}?as_user={{ member.id }}">Ver como {{ member }} ({{ member.role_label }})</a></li>
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}
+{% endblock %}

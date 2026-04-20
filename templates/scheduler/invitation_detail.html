@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Responder Convite{% endblock %}
+
+{% block content %}
+<section class="card narrow-card">
+    <p class="eyebrow">Responder convite</p>
+    <h2>{{ invitation.meeting.title }}</h2>
+    <p><strong>Gerente:</strong> {{ invitation.meeting.created_by }}</p>
+    <p><strong>Quando:</strong> {{ invitation.meeting.scheduled_for|date:"d/m/Y H:i" }}</p>
+    <p><strong>Local:</strong> {{ invitation.meeting.location }}</p>
+    <p>{{ invitation.meeting.description }}</p>
+
+    <form method="post" class="stack-form">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="field-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {{ field.errors }}
+            </div>
+        {% endfor %}
+        <button type="submit">Salvar resposta</button>
+    </form>
+</section>
+{% endblock %}

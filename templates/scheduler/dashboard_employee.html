@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Painel do Funcionário{% endblock %}
+
+{% block content %}
+<section class="hero card">
+    <h2>Olá, {{ acting_user.first_name|default:acting_user.username }}</h2>
+</section>
+
+<section class="stats-grid">
+    <article class="card stat-card">
+        <span class="stat-value">{{ pending_invitations }}</span>
+        <span class="stat-label">Pendentes</span>
+    </article>
+    <article class="card stat-card">
+        <span class="stat-value">{{ accepted_invitations }}</span>
+        <span class="stat-label">Aceitas</span>
+    </article>
+</section>
+
+<section class="card">
+    <div class="section-head">
+        <h3>Meus convites</h3>
+        <a class="button-link" href="{% url 'invitation_list' %}">Ver todos</a>
+    </div>
+    {% if invitations %}
+        <ul class="plain-list">
+            {% for invitation in invitations %}
+                <li>
+                    <a href="{% url 'invitation_detail' invitation.id %}">{{ invitation.meeting.title }}</a>
+                    <span>{{ invitation.meeting.scheduled_for|date:"d/m/Y H:i" }} | {{ invitation.get_status_display }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Você ainda não recebeu convites.</p>
+    {% endif %}
+</section>
+{% endblock %}
