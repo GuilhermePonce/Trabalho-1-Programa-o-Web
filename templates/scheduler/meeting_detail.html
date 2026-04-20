@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}{{ meeting.title }}{% endblock %}
+
+{% block content %}
+<section class="card">
+    <p class="eyebrow">Detalhes da reunião</p>
+    <h2>{{ meeting.title }}</h2>
+    <p>{{ meeting.description }}</p>
+    <div class="detail-grid">
+        <div><strong>Data:</strong> {{ meeting.scheduled_for|date:"d/m/Y H:i" }}</div>
+        <div><strong>Local:</strong> {{ meeting.location }}</div>
+    </div>
+    <div class="section-head">
+        <h3>Convidados</h3>
+        <a class="button-link" href="{% url 'meeting_update' meeting.id %}">Editar</a>
+    </div>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Funcionário</th>
+                <th>Status</th>
+                <th>Respondido em</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for invitation in meeting.invitations.all %}
+                <tr>
+                    <td>{{ invitation.employee }}</td>
+                    <td>{{ invitation.get_status_display }}</td>
+                    <td>{{ invitation.responded_at|date:"d/m/Y H:i"|default:"Ainda não respondeu" }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

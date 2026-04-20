@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Funcionários{% endblock %}
+
+{% block content %}
+<section class="card">
+    <div class="section-head">
+        <div>
+            <h2>Funcionários do gerente</h2>
+        </div>
+        <a class="button-link" href="{% url 'employee_create' %}">Cadastrar</a>
+    </div>
+
+    {% if employees %}
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Usuário</th>
+                    <th>E-mail</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in employees %}
+                    <tr>
+                        <td>{{ employee }}</td>
+                        <td>{{ employee.username }}</td>
+                        <td>{{ employee.email }}</td>
+                        <td class="actions">
+                            <a href="{% url 'employee_update' employee.id %}">Editar</a>
+                            <a href="{% url 'employee_delete' employee.id %}">Excluir</a>
+                            {% if request.user.is_superuser %}
+                                <a href="{% url 'dashboard' %}?as_user={{ employee.id }}">Ver como</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Não há funcionários cadastrados.</p>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<section class="card narrow-card">
+    <p class="eyebrow">Cadastro de funcionários</p>
+    <h2>{{ page_title }}</h2>
+    <form method="post" class="stack-form">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {% for field in form %}
+            <div class="field-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {{ field.help_text }}
+                {{ field.errors }}
+            </div>
+        {% endfor %}
+        <button type="submit">Salvar</button>
+    </form>
+</section>
+{% endblock %}
