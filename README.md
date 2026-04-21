@@ -90,3 +90,6 @@ Para utiliza-lo é só logar como admin e realizar as ações correspondentes no
 - Visualização do sistema pelo usuário admin.
 - Testes automatizados básicos com python manage.py test.
 
+
+# O que não funcionou
+- No render não foi possível estiliazar com css
