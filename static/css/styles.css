@@ -1,0 +1,161 @@
+
+:root {
+    --bg: #f6f1e8;
+    --panel: #fffdf9;
+    --panel-strong: #f1e5d2;
+    --text: #2d241c;
+    --muted: #776555;
+    --accent: #8a4b20;
+    --accent-dark: #5f3013;
+    --border: #ddc7b1;
+    --success: #dff2df;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--text);
+    background:
+        radial-gradient(circle at top right, rgba(138, 75, 32, 0.12), transparent 30%),
+        linear-gradient(180deg, #f4ecdf 0%, #f8f5ef 100%);
+}
+
+a { color: var(--accent-dark); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+button, .button-link {
+    border: 0;
+    border-radius: 999px;
+    background: var(--accent);
+    color: white;
+    padding: 0.8rem 1.2rem;
+    font: inherit;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.button-link.secondary { background: var(--panel-strong); color: var(--text); }
+
+.site-header {
+    padding: 1.5rem 2rem;
+    background: rgba(255, 253, 249, 0.9);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.brand h1, .brand p { margin: 0; }
+.brand h1 a { color: var(--text); }
+
+.eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.72rem;
+    color: var(--muted);
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.link-button { background: transparent; color: var(--accent-dark); padding: 0; }
+
+.page-shell {
+    width: min(1120px, calc(100% - 2rem));
+    margin: 2rem auto 4rem;
+}
+
+.card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 1.5rem;
+    box-shadow: 0 15px 40px rgba(73, 45, 22, 0.08);
+    margin-bottom: 1.5rem;
+}
+
+.hero { padding: 2rem; }
+.narrow-card { max-width: 680px; margin-left: auto; margin-right: auto; }
+.stats-grid, .content-grid, .detail-grid { display: grid; gap: 1rem; }
+.stats-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+.content-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.detail-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 1.5rem; }
+.stat-card { text-align: center; }
+.stat-value { display: block; font-size: 2.2rem; font-weight: bold; }
+.stat-label { color: var(--muted); }
+
+.section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.plain-list { list-style: none; padding: 0; margin: 0; }
+.plain-list li {
+    padding: 0.85rem 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+.plain-list li:first-child { border-top: 0; padding-top: 0; }
+.plain-list span, .stat-label { color: var(--muted); }
+
+.stack-form { display: grid; gap: 1rem; }
+.field-group { display: grid; gap: 0.35rem; }
+
+input, textarea, select {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background:#fff;
+    font: inherit;
+}
+
+textarea { min-height: 130px; resize: vertical; }
+ul.errorlist { margin: 0; padding-left: 1rem; color: #9b1c1c; }
+
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th, .data-table td {
+    padding: 0.9rem 0.7rem;
+    border-top: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+}
+
+.actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.messages, .preview-banner { margin-bottom: 1rem; }
+
+.message, .preview-banner {
+    background: var(--success);
+    border: 1px solid #b8d9b8;
+    padding: 1rem 1.2rem;
+    border-radius: 16px;
+}
+
+.credentials {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+}
+
+.inline-form { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+
+@media (max-width: 720px) {
+    .site-header, .section-head { align-items: flex-start; }
+    .data-table, .data-table thead, .data-table tbody, .data-table th, .data-table td, .data-table tr { display: block; }
+    .data-table thead { display: none; }
+    .data-table td { padding-left: 0; padding-right: 0; }
+}
